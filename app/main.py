@@ -66,3 +66,6 @@ def get_embedding(
         "dimension": int(token.vector.size),
         "embedding": token.vector.tolist()
     }
+
+from app.image_classifier import router as classifier_router
+app.include_router(classifier_router)

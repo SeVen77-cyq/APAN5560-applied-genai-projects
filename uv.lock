@@ -91,6 +91,8 @@ dependencies = [
     { name = "marimo" },
     { name = "matplotlib" },
     { name = "numpy" },
+    { name = "pillow" },
+    { name = "python-multipart" },
     { name = "requests" },
     { name = "scikit-learn" },
     { name = "scipy" },
@@ -98,6 +100,7 @@ dependencies = [
     { name = "torch" },
     { name = "torchinfo" },
     { name = "torchvision" },
+    { name = "tqdm" },
 ]
 
 [package.dev-dependencies]
@@ -123,6 +126,8 @@ requires-dist = [
     { name = "marimo", specifier = ">=0.23.9" },
     { name = "matplotlib", specifier = ">=3.10.3" },
     { name = "numpy", specifier = ">=2.3.0" },
+    { name = "pillow", specifier = ">=12.1.1" },
+    { name = "python-multipart", specifier = ">=0.0.32" },
     { name = "requests", specifier = ">=2.32.4" },
     { name = "scikit-learn", specifier = ">=1.7.1" },
     { name = "scipy", specifier = ">=1.16.1" },
@@ -130,6 +135,7 @@ requires-dist = [
     { name = "torch", specifier = ">=2.7.1" },
     { name = "torchinfo", specifier = ">=1.8.0" },
     { name = "torchvision", specifier = ">=0.22.1" },
+    { name = "tqdm", specifier = ">=4.67.3" },
 ]
 
 [package.metadata.requires-dev]

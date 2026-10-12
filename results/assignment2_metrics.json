@@ -1,0 +1,26 @@
+{
+  "dataset": "CIFAR10",
+  "input_shape": [
+    3,
+    64,
+    64
+  ],
+  "epochs": 5,
+  "batch_size": 64,
+  "learning_rate": 0.001,
+  "seed": 42,
+  "classes": [
+    "airplane",
+    "automobile",
+    "bird",
+    "cat",
+    "deer",
+    "dog",
+    "frog",
+    "horse",
+    "ship",
+    "truck"
+  ],
+  "test_loss": 1.00902004032135,
+  "test_accuracy": 0.6461
+}

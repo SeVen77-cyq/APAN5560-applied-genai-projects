@@ -10,6 +10,8 @@ dependencies = [
     "marimo>=0.23.9",
     "matplotlib>=3.10.3",
     "numpy>=2.3.0",
+    "pillow>=12.1.1",
+    "python-multipart>=0.0.32",
     "requests>=2.32.4",
     "scikit-learn>=1.7.1",
     "scipy>=1.16.1",
@@ -17,6 +19,7 @@ dependencies = [
     "torch>=2.7.1",
     "torchinfo>=1.8.0",
     "torchvision>=0.22.1",
+    "tqdm>=4.67.3",
 ]
 
 [dependency-groups]
