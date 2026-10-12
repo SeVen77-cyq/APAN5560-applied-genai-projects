@@ -76,3 +76,28 @@ The saved test returned HTTP 200.
 True class: cat. Predicted class: cat.
 Cat probability: approximately 0.7606.
 See results/assignment2_api_test.json for the recorded response.
+
+## Docker deployment
+With Docker running, execute from the repository root:
+
+```bash
+docker build -t assignment2-api .
+docker run --rm -p 8001:8000 assignment2-api
+```
+
+Open http://127.0.0.1:8001/docs to query POST /classify.
+
+Alternatively, from another terminal in the repository root:
+
+```bash
+curl --fail-with-body -X POST http://127.0.0.1:8001/classify \
+  -F "file=@results/cifar10_test_0.png"
+```
+
+The image includes the API dependencies, spaCy model, helper library,
+and trained classifier weights. No host Python environment or retraining
+is needed for Docker inference. Internet access is required during build
+to download dependencies.
+
+Docker inference was tested successfully and returned HTTP 200 with
+predicted_class "cat". Evidence: results/assignment2_docker_test.json.

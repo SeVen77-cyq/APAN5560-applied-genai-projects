@@ -8,3 +8,7 @@ exports/_*.log
 !app/**
 !pyproject.toml
 !uv.lock
+!helper_lib/
+!helper_lib/*.py
+!models/
+!models/assignment2_cnn.pth
