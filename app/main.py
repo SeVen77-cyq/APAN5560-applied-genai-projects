@@ -69,3 +69,7 @@ def get_embedding(
 
 from app.image_classifier import router as classifier_router
 app.include_router(classifier_router)
+
+
+from app.generation import router as generation_router
+app.include_router(generation_router)

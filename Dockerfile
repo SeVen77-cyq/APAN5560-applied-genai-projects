@@ -19,3 +19,6 @@ COPY models/assignment2_cnn.pth ./models/assignment2_cnn.pth
 EXPOSE 8000
 
 CMD ["/code/.venv/bin/python", "-m", "uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
+COPY models/assignment3_gan.pth ./models/assignment3_gan.pth
+
+COPY models/module7_lstm.pth ./models/module7_lstm.pth

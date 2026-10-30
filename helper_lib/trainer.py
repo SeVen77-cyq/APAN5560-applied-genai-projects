@@ -122,3 +122,6 @@ def train_vae_model(
         )
 
     return model
+
+
+from helper_lib.gan import train_gan

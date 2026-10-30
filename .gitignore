@@ -191,3 +191,5 @@ notebooks/generated_*.mid
 student_code/repos/
 student_code/results/
 student_code/students.csv
+
+backups/

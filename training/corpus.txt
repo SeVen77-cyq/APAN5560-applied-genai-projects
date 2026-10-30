@@ -1,0 +1,4 @@
+The Count of Monte Cristo is a novel written by Alexandre Dumas. It tells the story of Edmond Dantès, who is falsely imprisoned and later seeks revenge.
+this is another example sentence
+we are generating text based on bigram probabilities
+bigram models are simple but effective

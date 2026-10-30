@@ -145,6 +145,7 @@ def get_model(model_name):
         "CNN": CNN,
         "EnhancedCNN": EnhancedCNN,
         "VAE": VAE,
+        "GAN": GAN,
     }
 
     if model_name not in models:
@@ -154,3 +155,6 @@ def get_model(model_name):
         )
 
     return models[model_name]()
+
+
+from helper_lib.gan import GAN
