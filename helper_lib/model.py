@@ -2,6 +2,9 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
+from helper_lib.diffusion import Diffusion
+from helper_lib.energy import EnergyModel
+
 
 class FCNN(nn.Module):
     """Fully connected baseline for 32x32 RGB images."""
@@ -146,6 +149,8 @@ def get_model(model_name):
         "EnhancedCNN": EnhancedCNN,
         "VAE": VAE,
         "GAN": GAN,
+        "Diffusion": Diffusion,
+        "Energy": EnergyModel,
     }
 
     if model_name not in models:

@@ -14,11 +14,9 @@ RUN uv pip install --python /code/.venv/bin/python \
 
 COPY app ./app
 COPY helper_lib ./helper_lib
-COPY models/assignment2_cnn.pth ./models/assignment2_cnn.pth
+COPY models ./models
 
+RUN uv pip install --python /code/.venv/bin/python "transformers==4.52.4"
 EXPOSE 8000
 
 CMD ["/code/.venv/bin/python", "-m", "uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
-COPY models/assignment3_gan.pth ./models/assignment3_gan.pth
-
-COPY models/module7_lstm.pth ./models/module7_lstm.pth
