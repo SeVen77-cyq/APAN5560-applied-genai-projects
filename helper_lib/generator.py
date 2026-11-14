@@ -2,10 +2,13 @@ import math
 import torch
 import matplotlib.pyplot as plt
 
+from helper_lib.diffusion import Diffusion, sample_diffusion
+from helper_lib.energy import EnergyModel, sample_energy
+
 
 def generate_samples(model, device, num_samples=10,
-                     save_path=None, show=True):
-    """Generate and plot samples from either a GAN or a VAE."""
+                     save_path=None, show=True, *, diffusion_steps=100):
+    """Generate and plot samples from a supported image generator."""
     if num_samples < 1:
         raise ValueError("num_samples must be positive.")
 
@@ -13,12 +16,17 @@ def generate_samples(model, device, num_samples=10,
     was_training = model.training
     model.eval()
     try:
-        with torch.no_grad():
-            z = torch.randn(num_samples, model.latent_dim, device=device)
-            if hasattr(model, "generator"):
-                samples = (model.generator(z).cpu() + 1) / 2
-            else:
-                samples = model.decoder(z).cpu()
+        if isinstance(model, Diffusion):
+            samples = (sample_diffusion(model, device, num_samples, diffusion_steps).cpu() + 1) / 2
+        elif isinstance(model, EnergyModel):
+            samples = (sample_energy(model, device, num_samples).cpu() + 1) / 2
+        else:
+            with torch.no_grad():
+                z = torch.randn(num_samples, model.latent_dim, device=device)
+                if hasattr(model, "generator"):
+                    samples = (model.generator(z).cpu() + 1) / 2
+                else:
+                    samples = model.decoder(z).cpu()
     finally:
         model.train(was_training)
 
@@ -32,8 +40,10 @@ def generate_samples(model, device, num_samples=10,
     for index, ax in enumerate(axes.flat):
         ax.axis("off")
         if index < num_samples:
-            ax.imshow(samples[index, 0].numpy(),
-                      cmap="gray", vmin=0, vmax=1)
+            if samples.size(1) == 1:
+                ax.imshow(samples[index, 0].numpy(), cmap="gray", vmin=0, vmax=1)
+            else:
+                ax.imshow(samples[index].permute(1, 2, 0).numpy())
     fig.tight_layout()
     if save_path:
         fig.savefig(save_path)

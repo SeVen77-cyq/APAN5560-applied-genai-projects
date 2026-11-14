@@ -12,3 +12,6 @@ exports/_*.log
 !helper_lib/*.py
 !models/
 !models/assignment2_cnn.pth
+!models/assignment3_gan.pth
+!models/module7_lstm.pth
+!models/assignment4_*.pth

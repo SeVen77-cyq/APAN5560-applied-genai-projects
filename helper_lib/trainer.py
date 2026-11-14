@@ -125,3 +125,48 @@ def train_vae_model(
 
 
 from helper_lib.gan import train_gan
+
+
+def train_diffusion(model, data_loader, criterion, optimizer, device="cpu", epochs=10):
+    model.to(device).train()
+    for epoch in range(epochs):
+        total_loss = 0.0
+        for images, _ in data_loader:
+            images = images.to(device)
+            times = torch.randint(len(model.betas), (images.size(0),), device=device)
+            alpha = model.alpha_bar[times, None, None, None]
+            noise = torch.randn_like(images)
+            noisy = alpha.sqrt() * images + (1 - alpha).sqrt() * noise
+            loss = criterion(model(noisy, times), noise)
+            optimizer.zero_grad(set_to_none=True)
+            loss.backward()
+            optimizer.step()
+            total_loss += loss.item()
+        print(f"Diffusion epoch {epoch + 1}: loss={total_loss / len(data_loader):.4f}", flush=True)
+    return model
+
+
+def train_energy(model, data_loader, optimizer, device="cpu", epochs=10, sampling_steps=20):
+    from helper_lib.energy import langevin_sample
+
+    model.to(device).train()
+    replay = torch.empty(2048, 3, 32, 32, device=device).uniform_(-1, 1)
+    for epoch in range(epochs):
+        total_loss = 0.0
+        for images, _ in data_loader:
+            images = images.to(device)
+            indices = torch.randperm(len(replay), device=device)[:images.size(0)]
+            fresh = torch.rand(images.size(0), 1, 1, 1, device=device) < 0.05
+            start = torch.where(fresh, torch.empty_like(images).uniform_(-1, 1), replay[indices])
+            negatives = langevin_sample(model, start, steps=sampling_steps)
+            replay[indices] = negatives
+            real_energy = model(images)
+            fake_energy = model(negatives)
+            regularization = real_energy.square().mean() + fake_energy.square().mean()
+            loss = real_energy.mean() - fake_energy.mean() + 0.1 * regularization
+            optimizer.zero_grad(set_to_none=True)
+            loss.backward()
+            optimizer.step()
+            total_loss += loss.item()
+        print(f"Energy epoch {epoch + 1}: loss={total_loss / len(data_loader):.4f}", flush=True)
+    return model
